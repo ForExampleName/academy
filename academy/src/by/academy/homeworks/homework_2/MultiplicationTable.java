@@ -24,5 +24,4 @@ public class MultiplicationTable {
 
 		scanner.close();
 	}
-
 }

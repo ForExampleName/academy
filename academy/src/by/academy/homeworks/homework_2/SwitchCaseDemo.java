@@ -42,7 +42,5 @@ public class SwitchCaseDemo {
 		}
 
 		scanner.close();
-
 	}
-
 }

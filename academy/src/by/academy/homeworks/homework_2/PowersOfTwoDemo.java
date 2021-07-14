@@ -10,5 +10,4 @@ public class PowersOfTwoDemo {
 			result *= 2;
 		}
 	}
-
 }
