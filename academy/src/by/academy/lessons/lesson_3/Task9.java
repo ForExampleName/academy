@@ -6,7 +6,7 @@ public class Task9 {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Введите количество итераций: ");
+		System.out.println("Enter iteration number: ");
 		int n = scanner.nextInt();
 		
 		int positiveCount = 0;
@@ -28,9 +28,9 @@ public class Task9 {
 			}
 		}
 		
-		System.out.println("Положительных: " + positiveCount);
-		System.out.println("Отрицательных: " + negativeCount);
-		System.out.println("Нулей: " + zeroCount);
+		System.out.println("Positive count: " + positiveCount);
+		System.out.println("Negative count: " + negativeCount);
+		System.out.println("Zeros: " + zeroCount);
 		
 		scanner.close();
 	}

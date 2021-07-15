@@ -6,51 +6,50 @@ public class Task1 {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.print("Введите название месяца: ");
+		System.out.print("Enter month name: ");
 		String month = scanner.nextLine();
 		
 		switch(month) {
-			case "Январь":
+			case "January":
 				System.out.println("1");
 				break;
-			case "Февраль":
+			case "February":
 				System.out.println("2");
 				break;
-			case "Март":
+			case "March":
 				System.out.println("3");
 				break;
-			case "Апрель":
+			case "April":
 				System.out.println("4");
 				break;
-			case "Май":
+			case "May":
 				System.out.println("5");
 				break;
-			case "Июнь":
+			case "June":
 				System.out.println("6");
 				break;
-			case "Июль":
+			case "July":
 				System.out.println("7");
 				break;
-			case "Август":
+			case "August":
 				System.out.println("8");
 				break;
-			case "Сентябрь":
+			case "September":
 				System.out.println("9");
 				break;
-			case "Октябрь":
+			case "October":
 				System.out.println("10");
 				break;
-			case "Ноябрь":
+			case "November":
 				System.out.println("11");
 				break;
-			case "Декабрь":
+			case "December":
 				System.out.println("12");
 				break;
 			default:
-				System.out.println("Не знаю(");
+				System.out.println("Don't know this month(");
 		}
 			
 		scanner.close();
 	}
-
 }

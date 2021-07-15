@@ -8,18 +8,18 @@ public class Task11 {
 		Scanner scanner = new Scanner(System.in);
 		
 		for(int i =0;i<10;i++) {
-			System.out.print("¬ведите первое число: ");
+			System.out.print("Enter first number: ");
 			int first_num = scanner.nextInt();
 			
-			System.out.print("¬ведите второе число: ");
+			System.out.print("Enter second number: ");
 			int second_num = scanner.nextInt();
 			
 			if(first_num > second_num) {
-				System.out.println("ѕервое число больше");
+				System.out.println("First number is bigger");
 			}else if(second_num > first_num) {
-				System.out.println("¬торое число больше");
+				System.out.println("Second number is bigger");
 			}else {
-				System.out.println("„исла равны");
+				System.out.println("Number are equal");
 			}
 		}
 		

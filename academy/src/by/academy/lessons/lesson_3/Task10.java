@@ -7,10 +7,10 @@ public class Task10 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		
-		System.out.print("Введите сумму: ");
+		System.out.print("Enter sum of money: ");
 		int money = scanner.nextInt();
 		
-		System.out.print("Введите период хранения (в годах): ");
+		System.out.print("Enter time of money storage (years): ");
 		int time = scanner.nextInt();
 		
 		double temp = money;
@@ -18,7 +18,7 @@ public class Task10 {
 			temp = temp + temp * 0.03;
 		}
 		
-		System.out.println("В конце периода хранения Вы получите: " + temp + " у.е");
+		System.out.println("You will get : " + temp + " у.е after storage period");
 		scanner.close();
 	}
 

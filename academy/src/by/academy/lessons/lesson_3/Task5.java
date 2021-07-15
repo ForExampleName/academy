@@ -11,11 +11,11 @@ public class Task5 {
 		m = (s - sec) / 60;
 		min = m % 60;
 		h = (m - min) / 60;
-		System.out.println(h + " часов (-а) " + min + " минут (-ы) " + sec + " секунд (-ы)");
+		System.out.println(h + " hours " + min + " minutes " + sec + " seconds");
 		int days = h / 24;
-		System.out.println(days + " дней");
+		System.out.println(days + " days");
 		int months = days / 30;
-		System.out.println(months + " мес€цев");
+		System.out.println(months + " months");
 	}
 
 }
