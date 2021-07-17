@@ -1,4 +1,4 @@
-package by.academy.homeworks.homework_1;
+package by.academy.homeworks.homework_0;
 
 public class Animal {
 	private short age;
