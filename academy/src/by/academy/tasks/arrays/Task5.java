@@ -1,76 +1,74 @@
 package by.academy.tasks.arrays;
 
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Task5 {
-	private static final int MIN_POS = 0;
-	private static final int MAX_POS = 1;
-
-	private static final int INNER_ARRAY_COUNT = 5;
-
-	/* Custom sorting function for second way*/
-	private static void sort(int[] array) {
-		int temp = 0;
-		
-		for (int i = 0; i < array.length; i++) {
-			for (int j = 1; j < (array.length - i); j++) {
-				if (array[j - 1] > array[j]) {
-					temp = array[j];
-					array[j] = array[j - 1];
-					array[j - 1] = temp;
-				}
-			}
-		}
-	}
 
 	public static void main(String[] args) {
-		int[][] array = { 
-				{ 2, 7, 3, 7, 2, 9, 4, 0 }, 
-				{ 3, 8, 2, 1, 3, 2, 4, 23 }, 
-				{ 4, 5, 23, 56, 74, 2, 123, -4 },
-				{ -4, -6, -34, 654, 3, 5, 21, 0 }, 
-				{ 3, 3, 3, 3, 3, 3, 3, 3 } 
-		};
+		Random random = new Random();
 
-		int[][] minMaxArray = new int[5][2];
+		Scanner scanner = new Scanner(System.in);
 
-		/* First way */
-		int min = 0;
-		int max = 0;
+		System.out.print("Enter left border of the segment: ");
+		int leftBorder = scanner.nextInt();
 
-		for (int i = 0; i < INNER_ARRAY_COUNT; i++) {
+		System.out.print("Enter right border of the segment: ");
+		int rightBorder = scanner.nextInt();
 
-			min = array[i][0];
-			max = array[i][0];
-
-			for (int j = 0; j < array[i].length; j++) {
-				if (array[i][j] < min) {
-					min = array[i][j];
-				}
-				if (array[i][j] > max) {
-					max = array[i][j];
-				}
-			}
-
-			minMaxArray[i][MIN_POS] = min;
-			minMaxArray[i][MAX_POS] = max;
+		if (leftBorder > rightBorder) {
+			int temp = rightBorder;
+			rightBorder = leftBorder;
+			leftBorder = temp;
 		}
 
-		/* Second way (with custom sort function) */
-//		for (int i = 0; i < INNER_ARRAY_COUNT; i++) {
-//			sort(array[i]);
-//			minMaxArray[i][MIN_POS] = array[i][0];
-//			minMaxArray[i][MAX_POS] = array[i][array[i].length - 1];
-//		}
+		System.out.print("Enter array size: ");
+		int arraySize = scanner.nextInt();
 
-		/* Third method */
-//		for (int i = 0; i < INNER_ARRAY_COUNT; i++) {
-//			Arrays.sort(array[i]);
-//			minMaxArray[i][MIN_POS] = array[i][0];
-//			minMaxArray[i][MAX_POS] = array[i][array[i].length - 1];
-//		}
+		if (arraySize == 0) {
+			scanner.close();
+			return;
+		}
 
-		System.out.println(Arrays.deepToString(array));
-		System.out.println(Arrays.deepToString(minMaxArray));
+		int[] array1 = new int[arraySize];
+		int[] array2 = new int[arraySize];
+
+		for (int i = 0; i < arraySize; i++) {
+			array1[i] = random.nextInt(rightBorder - leftBorder + 1) + leftBorder;
+			array2[i] = random.nextInt(rightBorder - leftBorder + 1) + leftBorder;
+		}
+
+		System.out.println(Arrays.toString(array1));
+		System.out.println(Arrays.toString(array2));
+
+		int sum = 0;
+
+		float average1 = 0;
+		float average2 = 0;
+
+		for (int value : array1) {
+			sum += value;
+		}
+
+		average1 = Math.round(sum * 1000 / arraySize) / 1000.0F;
+
+		sum = 0;
+
+		for (int value : array2) {
+			sum += value;
+		}
+
+		average2 = Math.round(sum * 1000 / arraySize) / 1000.0F;
+
+		if (average1 > average2) {
+			System.out.println("Average of first array is bigger ( " + average1 + " > " + average2 + " )");
+		} else if (average2 > average1) {
+			System.out.println("Average of second array is bigger ( " + average2 + " > " + average1 + " )");
+		} else {
+			System.out.println("Averages of arrays are equal ( " + average1 + " = " + average2 + " )");
+		}
+
+		scanner.close();
 	}
 }

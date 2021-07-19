@@ -1,28 +1,56 @@
 package by.academy.tasks.arrays;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Task7 {
-	private static final int SIZE = 12;
+	private static void fibonacciLoop(int count) {
+		int current = 1;
+		int next = 1;
+		int temp;
+
+		System.out.println(current);
+
+		while (--count != 0) {
+			temp = current;
+			current = next;
+			next = next + temp;
+
+			System.out.println(current);
+		}
+	}
+
+	private static void fibonacciRec(int current, int next, int count) {
+		System.out.println(current);
+		if (--count == 0)
+			return;
+		else
+			fibonacciRec(next, current + next, count);
+	}
 
 	public static void main(String[] args) {
 		Random random = new Random();
 
-		int[] array = new int[SIZE];
+		Scanner scanner = new Scanner(System.in);
 
-		float average = 0F;
-		int sum = 0;
+		System.out.print("Enter number of elements: ");
+		int num = scanner.nextInt();
 
-		for (int i = 0; i < SIZE; i++) {
-			array[i] = random.nextInt(10);
+		if (num == 0) {
+			scanner.close();
+			return;
 		}
 
-		for (int val : array) {
-			sum += val;
-		}
+		/* Using loops */
+		System.out.println("Fibonacci sequence using loops: ");
+		fibonacciLoop(num);
 
-		average = sum / (float) SIZE;
+		System.out.println();
 
-		System.out.println(average);
+		/* Using recursion */
+		System.out.println("Fibonacci sequence using recursion: ");
+		fibonacciRec(1, 1, num);
+
+		scanner.close();
 	}
 }

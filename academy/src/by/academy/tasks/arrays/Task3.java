@@ -1,16 +1,53 @@
 package by.academy.tasks.arrays;
 
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Task3 {
 
 	public static void main(String[] args) {
-		String[][] array = { 
-				{ "a1", "a2", "a3", "a4", "a5", "a6" }, 
-				{ "b1", "b2", "b3", "b4", "b5", "b6" }, 
-				{ "c1", "c2", "c3", "c4", "c5", "c6" } 
-		};
-		
-		System.out.println(Arrays.deepToString(array));
+		Random random = new Random();
+
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.print("Enter left border of the segment: ");
+		int leftBorder = scanner.nextInt();
+
+		System.out.print("Enter right border of the segment: ");
+		int rightBorder = scanner.nextInt();
+
+		if (leftBorder > rightBorder) {
+			int temp = rightBorder;
+			rightBorder = leftBorder;
+			leftBorder = temp;
+		}
+
+		System.out.print("Enter array size: ");
+		int arraySize = scanner.nextInt();
+
+		if (arraySize == 0) {
+			scanner.close();
+			return;
+		}
+
+		int[] array = new int[arraySize];
+
+		for (int i = 0; i < array.length; i++) {
+			array[i] = random.nextInt(rightBorder - leftBorder + 1) + leftBorder;
+		}
+
+		System.out.println(Arrays.toString(array));
+
+		int count = 0;
+
+		for (int val : array) {
+			if ((val & 1) == 0 && val != 0)
+				++count;
+		}
+
+		System.out.println(count + " even entries in array");
+
+		scanner.close();
 	}
 }
