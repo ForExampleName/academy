@@ -7,18 +7,18 @@ public class TargetPairSub {
 
 	static int pairs(int k, int[] arr) {
 		int pairsCount = 0;
-		
-		int temp = 0;
-		
-		for(int i=0;i<arr.length-1;i++) {
-			for(int j=i+1;j<arr.length;j++) {
-				temp = arr[i]-arr[j];
-				temp = temp < 0 ? temp*(-1): temp;
-				if(temp == k)
+
+		int temp;
+
+		for (int i = 0; i < arr.length - 1; i++) {
+			for (int j = i + 1; j < arr.length; j++) {
+				temp = arr[i] - arr[j];
+				temp = temp < 0 ? -temp : temp;
+				if (temp == k)
 					++pairsCount;
 			}
 		}
-		
+
 		return pairsCount;
 	}
 
@@ -40,7 +40,7 @@ public class TargetPairSub {
 			arr[i] = Integer.parseInt(arrItems[i]);
 			System.out.print(arr[i] + " ");
 		}
-		
+
 		System.out.println();
 
 		int result = pairs(k, arr);
