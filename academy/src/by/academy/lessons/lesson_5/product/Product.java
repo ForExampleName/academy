@@ -3,9 +3,9 @@ package by.academy.lessons.lesson_5.product;
 import java.util.Objects;
 
 public class Product {
-	String name;
-	double price;
-	int quantity;
+	protected String name;
+	protected double price;
+	protected int quantity;
 
 	public Product() {
 		super();
