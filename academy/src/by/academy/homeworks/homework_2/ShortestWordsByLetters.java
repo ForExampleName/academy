@@ -3,9 +3,9 @@ package by.academy.homeworks.homework_2;
 import java.util.Scanner;
 
 public class ShortestWordsByLetters {
+	private static final Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("How many word would you like to enter?");
 		int wordCount = scanner.nextInt();
