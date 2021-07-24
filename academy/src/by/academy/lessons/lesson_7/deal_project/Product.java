@@ -1,8 +1,8 @@
-package by.academy.lessons.lesson_5.product;
+package by.academy.lessons.lesson_7.deal_project;
 
 import java.util.Objects;
 
-public class Product {
+public abstract class Product {
 	protected String name;
 	protected double price;
 	protected int quantity;
@@ -18,6 +18,12 @@ public class Product {
 		this.quantity = quantity;
 	}
 
+	protected abstract double calcDiscount();
+	
+	public double calcPrice() {
+		return (1 - calcDiscount()) * price * quantity;
+	}
+	
 	public String getName() {
 		return name;
 	}
