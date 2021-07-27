@@ -3,10 +3,9 @@ package by.academy.tasks.arrays;
 import java.util.Scanner;
 
 public class Task2 {
+	private static final Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-
 		System.out.print("Enter left border of the sequence: ");
 		int leftBorder = scanner.nextInt();
 
@@ -19,8 +18,7 @@ public class Task2 {
 			leftBorder = temp;
 		}
 
-		int oddCount = ((leftBorder & 1) == 0 && (rightBorder & 1) == 0) 
-				? (rightBorder - leftBorder) / 2 
+		int oddCount = ((leftBorder & 1) == 0 && (rightBorder & 1) == 0) ? (rightBorder - leftBorder) / 2
 				: (rightBorder - leftBorder) / 2 + 1;
 
 		if (oddCount == 0) {

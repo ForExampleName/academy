@@ -3,10 +3,9 @@ package by.academy.tasks.arrays;
 import java.util.Scanner;
 
 public class Task1 {
+	private static final Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-
 		System.out.print("Enter left border of the sequence: ");
 		int leftBorder = scanner.nextInt();
 
@@ -20,23 +19,19 @@ public class Task1 {
 		}
 
 		int evenCount;
-		
-		if((leftBorder & 1) == 0 || (rightBorder & 1) == 0) { //+1
-			if(leftBorder == 0 || rightBorder == 0) {//+0
+
+		if ((leftBorder & 1) == 0 || (rightBorder & 1) == 0) { // +1
+			if (leftBorder == 0 || rightBorder == 0) {// +0
 				evenCount = (rightBorder - leftBorder) / 2;
-			}
-			else if(leftBorder < 0 && rightBorder > 0){//+0
+			} else if (leftBorder < 0 && rightBorder > 0) {// +0
 				evenCount = (rightBorder - leftBorder) / 2;
-			}
-			else {//+1
+			} else {// +1
 				evenCount = (rightBorder - leftBorder) / 2 + 1;
 			}
-		}
-		else { //+0
-			if(leftBorder < 0 && rightBorder > 0){//+0
+		} else { // +0
+			if (leftBorder < 0 && rightBorder > 0) {// +0
 				evenCount = (rightBorder - leftBorder) / 2 - 1;
-			}
-			else {
+			} else {
 				evenCount = (rightBorder - leftBorder) / 2;
 			}
 		}
@@ -49,24 +44,20 @@ public class Task1 {
 		int[] array = new int[evenCount];
 
 		int currentValue;
-		
-		if((leftBorder & 1) == 0) {
-			if(leftBorder == 0) {
+
+		if ((leftBorder & 1) == 0) {
+			if (leftBorder == 0) {
 				currentValue = leftBorder + 2;
-			}
-			else {
+			} else {
 				currentValue = leftBorder;
 			}
-		}
-		else {
-			if(leftBorder + 1 == 0) {
+		} else {
+			if (leftBorder + 1 == 0) {
 				currentValue = leftBorder + 3;
-			}
-			else {
+			} else {
 				currentValue = leftBorder + 1;
 			}
 		}
-		
 
 		for (int i = 0; i < array.length; i++) {
 			array[i] = currentValue;

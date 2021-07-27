@@ -5,6 +5,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Task6 {
+	private static final Random random = new Random();
+	private static final Scanner scanner = new Scanner(System.in);
+
 	private static boolean isArrayHasAscendingOrder(int[] array) {
 		if (array.length == 1) {
 			return true;
@@ -17,10 +20,6 @@ public class Task6 {
 	}
 
 	public static void main(String[] args) {
-		Random random = new Random();
-
-		Scanner scanner = new Scanner(System.in);
-
 		System.out.print("Enter left border of the segment: ");
 		int leftBorder = scanner.nextInt();
 

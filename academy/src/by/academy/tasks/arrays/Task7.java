@@ -1,9 +1,10 @@
 package by.academy.tasks.arrays;
 
-import java.util.Random;
 import java.util.Scanner;
 
 public class Task7 {
+	private static final Scanner scanner = new Scanner(System.in);
+
 	private static void fibonacciLoop(int count) {
 		int current = 1;
 		int next = 1;
@@ -29,10 +30,6 @@ public class Task7 {
 	}
 
 	public static void main(String[] args) {
-		Random random = new Random();
-
-		Scanner scanner = new Scanner(System.in);
-
 		System.out.print("Enter number of elements: ");
 		int num = scanner.nextInt();
 

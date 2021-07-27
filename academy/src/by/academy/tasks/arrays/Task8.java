@@ -5,11 +5,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Task8 {
+	private static final Random random = new Random();
+	private static final Scanner scanner = new Scanner(System.in);
+
 	private static void max(int[] array) {
-		int max = array[0];
+		int max = Integer.MIN_VALUE;
 		int maxIdx = 0;
 
-		for (int i = 1; i < array.length; i++) {
+		for (int i = 0; i < array.length; i++) {
 			if (array[i] >= max) {
 				max = array[i];
 				maxIdx = i;
@@ -20,10 +23,6 @@ public class Task8 {
 	}
 
 	public static void main(String[] args) {
-		Random random = new Random();
-
-		Scanner scanner = new Scanner(System.in);
-
 		System.out.print("Enter left border of the segment: ");
 		int leftBorder = scanner.nextInt();
 
