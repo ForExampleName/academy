@@ -2,7 +2,7 @@ package by.academy.homeworks.homework_3.deal;
 
 import java.util.Objects;
 
-public class Laptop extends Product implements Cloneable{
+public class Laptop extends Product implements Cloneable {
 	protected String model;
 	protected int processor;
 	protected int ram;
@@ -34,8 +34,24 @@ public class Laptop extends Product implements Cloneable{
 	}
 
 	@Override
+	public boolean compare(Product toCompare) {
+		if (this == toCompare)
+			return true;
+		if (toCompare == null)
+			return false;
+		if (getClass() != toCompare.getClass())
+			return false;
+		Laptop otherLaptop = (Laptop) toCompare;
+		return Objects.equals(name, otherLaptop.name)
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(otherLaptop.price)
+				&& Objects.equals(model, otherLaptop.model) && processor == otherLaptop.processor
+				&& ram == otherLaptop.ram;
+	}
+
+	@Override
 	public String getDescription() {
 		StringBuilder builder = new StringBuilder();
+		builder.append("Ноутбук ");
 		builder.append(name);
 		builder.append(" ");
 		builder.append(model);
@@ -48,7 +64,7 @@ public class Laptop extends Product implements Cloneable{
 		builder.append(" ГБ");
 		builder.append(") ");
 		builder.append(price);
-		builder.append(" Руб");
+		builder.append(" руб");
 		builder.append(" x ");
 		builder.append(quantity);
 		return builder.toString();
@@ -57,6 +73,7 @@ public class Laptop extends Product implements Cloneable{
 	@Override
 	public String getBillDescription() {
 		StringBuilder builder = new StringBuilder();
+		builder.append("Ноутбук ");
 		builder.append(name);
 		builder.append(" ");
 		builder.append(model);
@@ -68,15 +85,15 @@ public class Laptop extends Product implements Cloneable{
 		builder.append(ram);
 		builder.append(" ГБ");
 		builder.append(") ");
-		builder.append(":\n ");
+		builder.append("| ");
 		builder.append(quantity);
 		builder.append(" x ");
 		builder.append(price);
 		builder.append(" - ");
-		builder.append(calcDiscount() * 100);
+		builder.append(Math.round(calcDiscount() * 10000) / 100.0);
 		builder.append("% = ");
 		builder.append(calcPrice());
-		builder.append(" Руб");
+		builder.append(" руб");
 		return builder.toString();
 	}
 
@@ -105,10 +122,10 @@ public class Laptop extends Product implements Cloneable{
 	}
 
 	@Override
-	public Laptop clone() throws CloneNotSupportedException{
-        return (Laptop) super.clone();
-    }
-	
+	public Laptop clone() throws CloneNotSupportedException {
+		return (Laptop) super.clone();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -119,7 +136,6 @@ public class Laptop extends Product implements Cloneable{
 
 	@Override
 	public boolean equals(Object obj) {
-//		System.out.println("Laptop");
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))

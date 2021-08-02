@@ -1,11 +1,16 @@
 package by.academy.homeworks.homework_3.deal;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import by.academy.homeworks.homework_3.deal.enums.Color;
 import by.academy.homeworks.homework_3.deal.enums.Resolution;
 import by.academy.homeworks.homework_3.deal.enums.Role;
+import by.academy.homeworks.homework_3.validators.AmericanPhoneValidator;
+import by.academy.homeworks.homework_3.validators.BelarusPhoneValidator;
+import by.academy.homeworks.homework_3.validators.DateValidator;
+import by.academy.homeworks.homework_3.validators.EmailValidator;
 
 public class Market {
 	private static final Scanner scanner = new Scanner(System.in);
@@ -35,173 +40,428 @@ public class Market {
 				"melnica@mail.ru", Role.CUSTOMER);
 	}
 
-	private static void addProductToCatalog(Product newProduct) {
-		for (Product p : catalog) {
-			if (p.equals(newProduct)) {
-				p.setQuantity(p.getQuantity() + newProduct.getQuantity());
-				return;
+	private static void showDeals(Deal[] deals) {
+		if (deals == null) {
+			System.out.println("Сделки отсутствуют");
+
+		} else {
+			for (int i = 0; i < deals.length; i++) {
+				System.out.println("-------------------------------------------------------------");
+				System.out.println("Сделка №" + (i + 1));
+				System.out.println(deals[i].getBill());
+				System.out.println("-------------------------------------------------------------");
 			}
 		}
-
-		Product[] newCatalog = new Product[catalog.length + 1];
-		System.arraycopy(catalog, 0, newCatalog, 0, catalog.length);
-		newCatalog[catalog.length] = newProduct;
-		catalog = newCatalog;
 	}
 
 	public static void main(String[] args) {
+		int mainMenu;
 
-		String input;
-		int menu;
+		String login, password;
 		User currentUser;
-		
+
 		while (true) {
 
-			String login, password;
+			System.out.println("Выйти из программы?(да/нет)");
+			if (scanner.nextLine().equals("да")) {
+				break;
+			}
 
-//			login: while (true) {
-//				System.out.print("Логин: ");
-//				login = scanner.nextLine();
-//
-//				System.out.print("Пароль: ");
-//				password = scanner.nextLine();
-//
-//				if (login.equals(SELLER_LOGIN)) {
-//					if (password.equals(SELLER_PASSWORD)) {
-//						currentUser = users[0];
-//						break;
-//					}
-//				} else if (login.equals(CUSTOMER_LOGIN)) {
-//					if (password.equals(CUSTOMER_PASSWORD)) {
-//						currentUser = users[1];
-//						break;
-//					}
-//				}
-//			}
+			while (true) {
+				System.out.print("Логин: ");
+				login = scanner.nextLine();
 
-			//// !!!!!!!!!!!!!!!!!!!!!!!!!
-			currentUser = users[0];
+				System.out.print("Пароль: ");
+				password = scanner.nextLine();
 
-			do {
+				if (login.equals(SELLER_LOGIN) && password.equals(SELLER_PASSWORD)) {
+					currentUser = users[0];
+					break;
+				} else if (login.equals(CUSTOMER_LOGIN) && password.equals(CUSTOMER_PASSWORD)) {
+					currentUser = users[1];
+					break;
+				}
+			}
+
+			while (true) {
 				System.out.println("Главное меню");
 				System.out.println("1. Сделки");
 				System.out.println("2. Профиль");
-				if (currentUser.getRole().equals(Role.SELLER))
-					System.out.println("3. Каталог");
-				System.out.print("0. Выход\n>");
-				menu = scanner.nextInt();
-			} while (currentUser.getRole().equals(Role.SELLER) ? (menu < 0 || menu > 3) : (menu < 0 && menu > 2));
+				System.out.println("3. Каталог");
+				System.out.println("0. Выход из учётной записи");
 
-			if (menu == 0) {
-				break;
-			}
+				do {
+					System.out.print(">");
+					mainMenu = scanner.nextInt();
+					scanner.nextLine();
+				} while (mainMenu < 0 || mainMenu > 3);
 
-			switch (menu) {
-			// Deals
-			case 1:
-				if (currentUser.getRole().equals(Role.SELLER)) {
-
-				} else if (currentUser.getRole().equals(Role.CUSTOMER)) {
-
+				if (mainMenu == 0) {
+					break;
 				}
 
-				break;
-			// Profile
-			case 2:
-				int profileMenu;
-				System.out.println(currentUser.getUserDescription());
-				do {
+				switch (mainMenu) {
+				// Deals
+				case 1:
+					int dealsMenu;
+
+					if (currentUser.getRole().equals(Role.SELLER)) {
+						System.out.println("1. Показать сделки");
+						System.out.println("2. Осуществить сделку");
+						System.out.println("0. Главное меню");
+
+						do {
+							System.out.print(">");
+							dealsMenu = scanner.nextInt();
+							scanner.nextLine();
+						} while (dealsMenu < 0 || dealsMenu > 2);
+
+						if (dealsMenu == 1) {
+							showDeals(deals);
+						} else if (dealsMenu == 2) {
+							showDeals(deals);
+
+							if (deals == null) {
+								continue;
+							}
+
+							int dealNumber;
+
+							System.out.println("Введите номер сделки");
+
+							do {
+								System.out.print(">");
+								dealNumber = scanner.nextInt();
+								scanner.nextLine();
+							} while (dealNumber < 1 || dealNumber > deals.length);
+
+							users[0].setMoney(users[0].getMoney() + deals[dealNumber - 1].calcFullPrice());
+							deals = Deal.removeDealFromArray(deals, dealNumber - 1);
+
+						}
+					} else if (currentUser.getRole().equals(Role.CUSTOMER)) {
+						while (true) {
+							System.out.println("1. Показать сделки");
+							System.out.println("2. Добавить сделку");
+							System.out.println("3. Изменить сделку");
+							System.out.println("4. Отменить сделку");
+							System.out.println("0. Главное меню");
+
+							do {
+								System.out.print(">");
+								dealsMenu = scanner.nextInt();
+								scanner.nextLine();
+							} while (dealsMenu < 0 || dealsMenu > 4);
+
+							if (dealsMenu == 0) {
+								break;
+							} else if (dealsMenu == 1 || dealsMenu == 4) {
+								showDeals(deals);
+
+								if (deals == null || dealsMenu == 1) {
+									continue;
+								}
+
+								int dealNumber;
+
+								System.out.println("Введите номер сделки");
+								do {
+									System.out.print(">");
+									dealNumber = scanner.nextInt();
+									scanner.nextLine();
+								} while (dealNumber < 1 || dealNumber > deals.length);
+
+								for (Product p : deals[dealNumber - 1].getProducts()) {
+									catalog = Product.addProductToArray(catalog, p);
+								}
+
+								users[1].setMoney(users[1].getMoney() + deals[dealNumber - 1].calcFullPrice());
+
+								deals = Deal.removeDealFromArray(deals, dealNumber - 1);
+								System.out.println("Сделка " + dealNumber + " была отменена");
+
+							} else if (dealsMenu == 2) {
+								int menu;
+								Deal deal = new Deal();
+
+								while (true) {
+									System.out.println("Текущий состав сделки:");
+									System.out.println(deal.getProductsDescription());
+									System.out.println("1. Добавить товар в сделку");
+									System.out.println("0. Готово");
+
+									do {
+										System.out.print(">");
+										menu = scanner.nextInt();
+										scanner.nextLine();
+									} while (menu < 0 || menu > 1);
+
+									if (menu == 0) {
+										break;
+									} else if (menu == 1) {
+										if (catalog.length == 0) {
+											System.out.println("Извините, в данное время каталог пуст");
+											if (deal.getProducts() == null)
+												System.out.println("Создание сделки отменено");
+											else
+												System.out.println("Сделка сохранена в текущем виде");
+											break;
+										}
+
+										String input;
+										int productIndx, quantity;
+
+										while (true) {
+											System.out.println("Каталог:");
+
+											for (int i = 0; i < catalog.length; i++) {
+												System.out.println((i + 1) + ". " + catalog[i].getDescription());
+											}
+
+											System.out.println("Остаток средств: " + users[1].getMoney() + "\n");
+
+											System.out.print("Введите через пробел номер товара и количество:");
+											input = scanner.nextLine();
+
+											productIndx = Integer.valueOf(input.split(" ")[0]);
+											quantity = Integer.valueOf(input.split(" ")[1]);
+
+											if (productIndx < 1 || productIndx > catalog.length) {
+												continue;
+											}
+
+											Product currentProduct = null;
+											try {
+												currentProduct = catalog[productIndx - 1].clone();
+											} catch (CloneNotSupportedException e) {
+												e.printStackTrace();
+											}
+
+											if (quantity > currentProduct.getQuantity()) {
+												System.out
+														.println("Выбрано слишком большое значение количества товара");
+												continue;
+											}
+
+											currentProduct.setQuantity(quantity);
+
+											if (deal.addProductToDeal(users[1], currentProduct)) {
+												catalog = Product.removeProductFromArray(catalog, currentProduct);
+											}
+
+											break;
+										}
+									}
+								}
+
+								if (deal.getProducts() != null) {
+									deal.setCustomer(users[1]);
+									deal.setSeller(users[0]);
+									deal.setDealDate(LocalDate.now());
+
+									deals = Deal.addDealToArray(deals, deal);
+
+									System.out.println("Сделка успешно создана");
+								}
+
+							} else if (dealsMenu == 3) {
+								int dealNumber, action;
+
+								showDeals(deals);
+								System.out.println("Выберите номер сделки");
+								do {
+									System.out.print(">");
+									dealNumber = scanner.nextInt();
+									scanner.nextLine();
+								} while (dealNumber < 1 || dealNumber > deals.length);
+
+								System.out.println("Выберите действие:");
+								System.out.println("1. Убрать товар");
+								System.out.println("2. Добавить товар");
+
+								do {
+									System.out.print(">");
+									action = scanner.nextInt();
+									scanner.nextLine();
+								} while (action < 1 || action > 2);
+
+								if (action == 1) {
+									Product[] dealProducts = deals[dealNumber - 1].getProducts();
+									for (int i = 0; i < dealProducts.length; i++) {
+										System.out.println((i + 1) + ". " + dealProducts[i].getDescription());
+									}
+
+									String input;
+									int productIndx, quantity;
+
+									System.out.println("Введите через пробел номер товара и количество");
+									while (true) {
+										System.out.print("\n>");
+										input = scanner.nextLine();
+
+										productIndx = Integer.valueOf(input.split(" ")[0]);
+										quantity = Integer.valueOf(input.split(" ")[1]);
+
+										if (productIndx < 1 || productIndx > dealProducts.length) {
+											System.out.println("Введён неправильный номер");
+											continue;
+										}
+
+										if (quantity > dealProducts[productIndx - 1].getQuantity()) {
+											System.out.println("Выбрано слишком большое значение количества товара");
+											continue;
+										}
+
+										Product toRemove = null;
+
+										try {
+											toRemove = dealProducts[productIndx - 1].clone();
+										} catch (CloneNotSupportedException e) {
+											e.printStackTrace();
+										}
+
+										toRemove.setQuantity(quantity);
+
+										deals[dealNumber - 1].removeProductFromDeal(users[1], toRemove);
+
+										catalog = Product.addProductToArray(catalog, toRemove);
+										break;
+									}
+								} else {
+									System.out.println("Каталог");
+									for (int i = 0; i < catalog.length; i++) {
+										System.out.println((i + 1) + ". " + catalog[i].getDescription());
+									}
+
+									String input;
+									int productIndx, quantity;
+
+									System.out.println("Введите через пробел номер товара и количество");
+									while (true) {
+										System.out.print("\n>");
+										input = scanner.nextLine();
+
+										productIndx = Integer.valueOf(input.split(" ")[0]);
+										quantity = Integer.valueOf(input.split(" ")[1]);
+
+										if (productIndx < 1 || productIndx > catalog.length) {
+											System.out.println("Введён неправильный номер");
+											continue;
+										}
+
+										if (quantity > catalog[productIndx - 1].getQuantity()) {
+											System.out.println("Выбрано слишком большое значение количества товара");
+											continue;
+										}
+
+										Product newProduct = null;
+
+										try {
+											newProduct = catalog[productIndx - 1].clone();
+										} catch (CloneNotSupportedException e) {
+											e.printStackTrace();
+										}
+
+										newProduct.setQuantity(quantity);
+
+										deals[dealNumber - 1].addProductToDeal(users[1], newProduct);
+
+										catalog = Product.removeProductFromArray(catalog, newProduct);
+										break;
+									}
+								}
+							}
+						}
+					}
+					break;
+				// Profile
+				case 2:
+					int profileMenu;
+
+					System.out.println("Профиль\n" + currentUser.getUserDescription());
 					System.out.println("1. Изменить ФИО");
 					System.out.println("2. Изменить номер мобильного телефона");
 					System.out.println("3. Изменить адрес электронной почты");
-					System.out.print("0. Главное меню\n>");
-
-					profileMenu = scanner.nextInt();
-				} while (profileMenu < 0 || profileMenu > 3);
-
-				scanner.nextLine();
-
-				if (profileMenu == 1) {
-					System.out.print("Вводите ФИО: ");
-					String fio = scanner.nextLine();
-
-					currentUser.setFullName(fio);
-
-				} else if (profileMenu == 2) {
-					String phone;
+					System.out.println("4. Изменить день рождения");
+					System.out.print("0. Главное меню");
 
 					do {
-						System.out.print("Вводите номер мобильного телефона: ");
-						phone = scanner.nextLine();
-					} while (!currentUser.setPhone(phone));
+						System.out.print("\n>");
+						profileMenu = scanner.nextInt();
+						scanner.nextLine();
+					} while (profileMenu < 0 || profileMenu > 4);
 
-				} else if (profileMenu == 3) {
-					String email;
+					if (profileMenu == 1) {
+						System.out.print("Введите ФИО: ");
+						String fio = scanner.nextLine();
+						currentUser.setFullName(fio);
+					} else if (profileMenu == 2) {
+						String phone;
 
-					do {
-						System.out.print("Вводите адрес электронной почты: ");
-						email = scanner.nextLine();
-					} while (!currentUser.setEmail(email));
-
-				}
-
-				break;
-			// Catalog
-			case 3:
-				int catalogMenu;
-
-				while (true) {
-					do {
-						System.out.println("1. Показать каталог");
-						System.out.println("2. Добавить товар");
-						System.out.print("0. Главное меню\n>");
-
-						catalogMenu = scanner.nextInt();
-					} while (catalogMenu < 0 || catalogMenu > 2);
-
-					if (catalogMenu == 1) {
-						for (Product p : catalog) {
-							System.out.println(p.getDescription());
-						}
-					} else if (catalogMenu == 2) {
-						int productID;
+						System.out.print("Введите номер мобильного телефона: ");
 						do {
+							phone = scanner.nextLine();
+						} while (!(new BelarusPhoneValidator().validate(phone)
+								|| new AmericanPhoneValidator().validate(phone)));
+
+						currentUser.setPhone(phone);
+					} else if (profileMenu == 3) {
+						String email;
+
+						System.out.print("Введите адрес электронной почты: ");
+						do {
+							email = scanner.nextLine();
+						} while (!(new EmailValidator().validate(email)));
+
+						currentUser.setEmail(email);
+					} else if (profileMenu == 4) {
+						String birthday;
+
+						System.out.print("Введите дату Вашего дня рождения (формат: dd/MM/yyyy): ");
+						do {
+							birthday = scanner.nextLine();
+						} while (!(new DateValidator().validate(birthday)));
+
+						currentUser.setBirthday(LocalDate.parse(birthday, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+					}
+					break;
+				// Catalog
+				case 3:
+					int catalogMenu;
+
+					while (true) {
+						System.out.println("1. Показать каталог");
+						if (currentUser.getRole().equals(Role.SELLER))
+							System.out.println("2. Добавить товар");
+						System.out.println("0. Главное меню");
+						do {
+							System.out.print(">");
+							catalogMenu = scanner.nextInt();
+							scanner.nextLine();
+						} while (currentUser.getRole().equals(Role.SELLER) ? (catalogMenu < 0 || catalogMenu > 2)
+								: (catalogMenu < 0 || catalogMenu > 1));
+
+						if (catalogMenu == 1) {
+							System.out.println("Каталог:");
+							for (Product p : catalog) {
+								System.out.println(p.getDescription());
+							}
+						} else if (catalogMenu == 2) {
+							int productID;
+
 							System.out.println("1. Ноутбук");
 							System.out.println("2. Мобильный телефон");
-							System.out.print("3. Телевизор\n>");
+							System.out.println("3. Телевизор");
 
-							productID = scanner.nextInt();
-						} while (productID < 1 || productID > 3);
-						scanner.nextLine();
-						
-						String name, model;
-						double price;
-						int quantity;
+							do {
+								System.out.print(">");
+								productID = scanner.nextInt();
+								scanner.nextLine();
+							} while (productID < 1 || productID > 3);
 
-						if (productID == 1) {
-							int processor, ram;
-							System.out.print("Введите название: ");
-							name = scanner.nextLine();
-
-							System.out.print("Введите название модели: ");
-							model = scanner.nextLine();
-
-							System.out.print("Введите количество товара: ");
-							quantity = scanner.nextInt();
-
-							System.out.print("Введите цену: ");
-							price = scanner.nextDouble();
-
-							System.out.print("Введите частоту процессора(МГц): ");
-							processor = scanner.nextInt();
-
-							System.out.print("Введите количество ОЗУ: ");
-							ram = scanner.nextInt();
-
-							addProductToCatalog(new Laptop(name, price, quantity, model, processor, ram));
-						} else if (productID == 2) {
-							Color color;
-							float camera;
+							String name, model;
+							double price;
+							int quantity;
 
 							System.out.print("Введите название: ");
 							name = scanner.nextLine();
@@ -214,57 +474,65 @@ public class Market {
 
 							System.out.print("Введите цену: ");
 							price = scanner.nextDouble();
+							scanner.nextLine();
+							
+							if (productID == 1) {
+								int processor, ram;
 
-							System.out.print("Введите цвет. Возможные цвета: ");
-							for (Color c : Color.values()) {
-								System.out.print(c + "|");
+								System.out.print("Введите частоту процессора(МГц): ");
+								processor = scanner.nextInt();
+
+								System.out.print("Введите количество ОЗУ: ");
+								ram = scanner.nextInt();
+
+								catalog = Product.addProductToArray(catalog,
+										new Laptop(name, price, quantity, model, processor, ram));
+							} else if (productID == 2) {
+								Color color;
+								float camera;
+
+								System.out.println("Введите цвет. Возможные цвета: ");
+								for (Color c : Color.values()) {
+									System.out.println(c.getName());
+								}
+
+								do {
+									System.out.print(">");
+									color = Color.getColorByName(scanner.nextLine());
+								} while (color == null);
+
+								System.out.print("Введите количество МП камеры: ");
+								camera = scanner.nextFloat();
+
+								catalog = Product.addProductToArray(catalog,
+										new MobilePhone(name, price, quantity, model, color, camera));
+							} else if (productID == 3) {
+								Resolution resolution;
+								float diagonal;
+
+								System.out.println("Введите разрешение экрана. Возможные варианты: ");
+								for (Resolution r : Resolution.values()) {
+									System.out.println(r.getName());
+								}
+
+								do {
+									System.out.print(">");
+									resolution = Resolution.getResolutionByName(scanner.nextLine());
+								} while (resolution == null);
+
+								System.out.print("Введите диагональ экрана: ");
+								diagonal = scanner.nextFloat();
+
+								catalog = Product.addProductToArray(catalog,
+										new TV(name, price, quantity, model, diagonal, resolution));
 							}
-							System.out.print("\n>");
-
-							color = Color.getColorByName(scanner.nextLine());
-
-							System.out.print("Введите количество МП камеры: ");
-							camera = scanner.nextFloat();
-
-							addProductToCatalog(new MobilePhone(name, price, quantity, model, color, camera));
-						} else if (productID == 3) {
-							Resolution resolution;
-							float diagonal;
-
-							System.out.print("Введите название: ");
-							name = scanner.nextLine();
-
-							System.out.print("Введите название модели: ");
-							model = scanner.nextLine();
-
-							System.out.print("Введите количество товара: ");
-							quantity = scanner.nextInt();
-
-							System.out.print("Введите цену: ");
-							price = scanner.nextDouble();
-
-							System.out.print("Введите разрешение экрана. Возможные варианты: ");
-							for (Resolution r : Resolution.values()) {
-								System.out.print(r + "|");
-							}
-							System.out.print("\n>");
-
-							resolution = Resolution.getResolutionByName(scanner.nextLine());
-
-							System.out.print("Введите диагональ экрана: ");
-							diagonal = scanner.nextFloat();
-
-							addProductToCatalog(new TV(name, price, quantity, model, diagonal, resolution));
+						} else if (catalogMenu == 0) {
+							break;
 						}
-					} else if (catalogMenu == 0) {
-						break;
 					}
 				}
-
 			}
-			scanner.nextLine();
 		}
-
 		scanner.close();
 	}
 }

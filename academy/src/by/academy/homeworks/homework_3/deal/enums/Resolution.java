@@ -12,7 +12,7 @@ public enum Resolution {
 	public String getName() {
 		return name;
 	}
-	
+
 	public static Resolution getResolutionByName(String name) {
 		switch (name) {
 		case "Full HD":

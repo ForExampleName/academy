@@ -13,13 +13,12 @@ public class DateValidatorDemo {
 		System.out.print("Enter your date (use format dd/MM/yyyy or dd-MM-yyyy): ");
 		String date = scanner.nextLine();
 
-		if(dateValidator.validate(date)) {
+		if (dateValidator.validate(date)) {
 			System.out.println("Correct date");
-		}
-		else {
+		} else {
 			System.out.println("Not corect date");
 		}
-		
+
 		scanner.close();
 	}
 }

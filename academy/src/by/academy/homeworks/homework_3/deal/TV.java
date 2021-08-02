@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import by.academy.homeworks.homework_3.deal.enums.Resolution;
 
-public class TV extends Product implements Cloneable{
+public class TV extends Product implements Cloneable {
 	protected String model;
 	protected float diagonal;
 	protected Resolution resolution;
@@ -34,8 +34,24 @@ public class TV extends Product implements Cloneable{
 	}
 
 	@Override
+	public boolean compare(Product toCompare) {
+		if (this == toCompare)
+			return true;
+		if (toCompare == null)
+			return false;
+		if (getClass() != toCompare.getClass())
+			return false;
+		TV otherTV = (TV) toCompare;
+		return Objects.equals(name, otherTV.name)
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(otherTV.price)
+				&& Float.floatToIntBits(diagonal) == Float.floatToIntBits(otherTV.diagonal)
+				&& Objects.equals(model, otherTV.model) && resolution == otherTV.resolution;
+	}
+
+	@Override
 	public String getDescription() {
 		StringBuilder builder = new StringBuilder();
+		builder.append("Телевизор ");
 		builder.append(name);
 		builder.append(" ");
 		builder.append(model);
@@ -47,7 +63,7 @@ public class TV extends Product implements Cloneable{
 		builder.append(resolution.getName());
 		builder.append(") ");
 		builder.append(price);
-		builder.append(" Руб");
+		builder.append(" руб");
 		builder.append(" x ");
 		builder.append(quantity);
 		return builder.toString();
@@ -56,6 +72,7 @@ public class TV extends Product implements Cloneable{
 	@Override
 	public String getBillDescription() {
 		StringBuilder builder = new StringBuilder();
+		builder.append("Телевизор ");
 		builder.append(name);
 		builder.append(" ");
 		builder.append(model);
@@ -66,15 +83,15 @@ public class TV extends Product implements Cloneable{
 		builder.append("разрешение ");
 		builder.append(resolution.getName());
 		builder.append(") ");
-		builder.append(":\n ");
+		builder.append("| ");
 		builder.append(quantity);
 		builder.append(" x ");
 		builder.append(price);
 		builder.append(" - ");
-		builder.append(calcDiscount() * 100);
+		builder.append(Math.round(calcDiscount() * 10000) / 100.0);
 		builder.append("% = ");
 		builder.append(calcPrice());
-		builder.append(" Руб");
+		builder.append(" руб");
 		return builder.toString();
 	}
 
@@ -101,12 +118,12 @@ public class TV extends Product implements Cloneable{
 	public void setResolution(Resolution resolution) {
 		this.resolution = resolution;
 	}
-	
+
 	@Override
-	public TV clone() throws CloneNotSupportedException{
-        return (TV) super.clone();
-    }
-	
+	public TV clone() throws CloneNotSupportedException {
+		return (TV) super.clone();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -117,7 +134,6 @@ public class TV extends Product implements Cloneable{
 
 	@Override
 	public boolean equals(Object obj) {
-//		System.out.println("TV");
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import by.academy.homeworks.homework_3.deal.enums.Color;
 
-public class MobilePhone extends Product implements Cloneable{
+public class MobilePhone extends Product implements Cloneable {
 	protected String model;
 	protected Color color;
 	protected float camera;
@@ -32,8 +32,24 @@ public class MobilePhone extends Product implements Cloneable{
 	}
 
 	@Override
+	public boolean compare(Product toCompare) {
+		if (this == toCompare)
+			return true;
+		if (toCompare == null)
+			return false;
+		if (getClass() != toCompare.getClass())
+			return false;
+		MobilePhone otherPhone = (MobilePhone) toCompare;
+		return Objects.equals(name, otherPhone.name)
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(otherPhone.price)
+				&& Float.floatToIntBits(camera) == Float.floatToIntBits(otherPhone.camera) && color == otherPhone.color
+				&& Objects.equals(model, otherPhone.model);
+	}
+
+	@Override
 	public String getDescription() {
 		StringBuilder builder = new StringBuilder();
+		builder.append("Мобильный телефон ");
 		builder.append(name);
 		builder.append(" ");
 		builder.append(model);
@@ -43,7 +59,7 @@ public class MobilePhone extends Product implements Cloneable{
 		builder.append(camera);
 		builder.append(" МП ");
 		builder.append(price);
-		builder.append(" Руб");
+		builder.append(" руб");
 		builder.append(" x ");
 		builder.append(quantity);
 		return builder.toString();
@@ -52,6 +68,7 @@ public class MobilePhone extends Product implements Cloneable{
 	@Override
 	public String getBillDescription() {
 		StringBuilder builder = new StringBuilder();
+		builder.append("Мобильный телефон ");
 		builder.append(name);
 		builder.append(" ");
 		builder.append(model);
@@ -59,16 +76,16 @@ public class MobilePhone extends Product implements Cloneable{
 		builder.append(color.getName());
 		builder.append(") ");
 		builder.append(camera);
-		builder.append(" МП");
-		builder.append(":\\n");
+		builder.append(" МП ");
+		builder.append("| ");
 		builder.append(quantity);
 		builder.append(" x ");
 		builder.append(price);
 		builder.append(" - ");
-		builder.append(calcDiscount() * 100);
+		builder.append(Math.round(calcDiscount() * 10000) / 100.0);
 		builder.append("% = ");
 		builder.append(calcPrice());
-		builder.append(" Руб");
+		builder.append(" руб");
 		return builder.toString();
 	}
 
@@ -97,10 +114,10 @@ public class MobilePhone extends Product implements Cloneable{
 	}
 
 	@Override
-	public MobilePhone clone() throws CloneNotSupportedException{
-        return (MobilePhone) super.clone();
-    }
-	
+	public MobilePhone clone() throws CloneNotSupportedException {
+		return (MobilePhone) super.clone();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -111,7 +128,6 @@ public class MobilePhone extends Product implements Cloneable{
 
 	@Override
 	public boolean equals(Object obj) {
-//		System.out.println("PHONE");
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))

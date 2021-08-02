@@ -1,8 +1,9 @@
 package by.academy.homeworks.homework_3.deal;
 
+import java.util.Arrays;
 import java.util.Objects;
 
-public abstract class Product implements Cloneable{
+public abstract class Product implements Cloneable {
 	protected String name;
 	protected double price;
 	protected int quantity;
@@ -18,62 +19,73 @@ public abstract class Product implements Cloneable{
 		this.quantity = quantity;
 	}
 
-	public double calcPrice() {
-		return (1 - calcDiscount()) * price * quantity;
-	}
-
 	protected abstract double calcDiscount();
 
 	public abstract String getDescription();
 
 	public abstract String getBillDescription();
 
-	public String getName() {
-		return name;
+	public abstract boolean compare(Product toCompare);
+
+	public double calcPrice() {
+		return Math.round((1 - calcDiscount()) * price * quantity * 100.0) / 100.0;
 	}
 
-	public static void addProductToArray(Product[] array, Product newProduct) {
-		for (Product p : array) {
-			if (p.equals(newProduct)) {
-				p.setQuantity(p.getQuantity() + newProduct.getQuantity());
-				return;
+	public static Product[] addProductToArray(Product[] array, Product newProduct) {
+		if (array != null) {
+			for (Product p : array) {
+				if (p.compare(newProduct)) {
+					p.setQuantity(p.getQuantity() + newProduct.getQuantity());
+					return array;
+				}
 			}
+
+			array = Arrays.copyOf(array, array.length + 1);
+			array[array.length - 1] = newProduct;
+		} else {
+			array = new Product[1];
+			array[0] = newProduct;
 		}
 
-		Product[] newArray = new Product[array.length + 1];
-
-		System.arraycopy(array, 0, newArray, 0, array.length);
-
-		newArray[array.length] = newProduct;
-		array = newArray;
+		return array;
 	}
 
-	public static boolean removeProductFromArray(Product[] array, Product toRemove) {
+	public static Product[] removeProductFromArray(Product[] array, Product toRemove) {
+		if (array == null) {
+			System.out.println("Ошибка. Массив пустой");
+			return null;
+		}
 		for (int i = 0; i < array.length; i++) {
-			if (array[i].equals(toRemove)) {
+			if (array[i].compare(toRemove)) {
 				if (toRemove.getQuantity() > array[i].getQuantity()) {
 					System.out.println("Ошибка. Попытка удалить слишком большое количество товара");
-					return false;
+					return array;
 				} else if (toRemove.getQuantity() < array[i].getQuantity()) {
 					array[i].setQuantity(array[i].getQuantity() - toRemove.getQuantity());
-					return true;
+					return array;
 				} else if (toRemove.getQuantity() == array[i].getQuantity()) {
+					if (array.length == 1) {
+						return null;
+					}
+
 					Product[] newArray = new Product[array.length - 1];
 
 					if (i != 0) {
 						System.arraycopy(array, 0, newArray, 0, i);
 					}
-					System.arraycopy(array, i + 1, newArray, i, array.length - i);
+					System.arraycopy(array, i + 1, newArray, i, array.length - i - 1);
 
-					array = newArray;
-					return true;
+					return newArray;
 				}
 			}
 		}
 
 		System.out.println("Ошибка. Данный продукт не найден");
-		return false;
+		return array;
+	}
 
+	public String getName() {
+		return name;
 	}
 
 	public void setName(String name) {
@@ -98,10 +110,10 @@ public abstract class Product implements Cloneable{
 	}
 
 	@Override
-	public Product clone() throws CloneNotSupportedException{
-        return (Product) super.clone();
-    }
-	
+	public Product clone() throws CloneNotSupportedException {
+		return (Product) super.clone();
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, price, quantity);
@@ -117,8 +129,7 @@ public abstract class Product implements Cloneable{
 			return false;
 		Product other = (Product) obj;
 		return Objects.equals(name, other.name)
-				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price);// && quantity ==
-																							// other.quantity;
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price) && quantity == other.quantity;
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public class Deal {
 	protected User customer;
 	protected LocalDate dealDate;
 	protected LocalDate deadline;
-	
+
 	public Deal() {
 		super();
 	}
@@ -26,28 +26,103 @@ public class Deal {
 
 	public double calcFullPrice() {
 		double fullPrice = 0;
-		
+
 		for (Product p : products) {
 			fullPrice += p.calcPrice();
 		}
-		
+
 		return Math.round(fullPrice * 100.0) / 100.0;
 	}
-	
-	public void addProductToDeal(Product newProduct) {
-		Product.addProductToArray(products, newProduct);
-	}
-	
-	public boolean removeProductFromDeal(int productIndx, int quantity) {
-		if(quantity > products[productIndx].getQuantity()) {
-			System.out.println("Ошибка. В данной сделке нет такого количества указанного товара");
+
+	public boolean addProductToDeal(User customer, Product newProduct) {
+		if (newProduct == null)
+			return false;
+		if ((customer.getMoney() - newProduct.calcPrice()) < 0) {
+			System.out.println("Недостаточно средств на счёте для осуществления операции");
 			return false;
 		}
-//		Product toRemove =  products[productIndx].clone();
-//		Product.removeProductFromArray(products, )
+
+		products = Product.addProductToArray(products, newProduct);
+		customer.setMoney(customer.getMoney() - newProduct.calcPrice());
 		return true;
 	}
-	
+
+	public void removeProductFromDeal(User customer, Product toRemove) {
+		if (toRemove == null) {
+			return;
+		}
+		customer.setMoney(customer.getMoney() + toRemove.calcPrice());
+		products = Product.removeProductFromArray(products, toRemove);
+	}
+
+	public static Deal[] addDealToArray(Deal[] array, Deal newDeal) {
+		if (array != null) {
+			array = Arrays.copyOf(array, array.length + 1);
+			array[array.length - 1] = newDeal;
+		} else {
+			array = new Deal[1];
+			array[0] = newDeal;
+		}
+
+		return array;
+	}
+
+	public static Deal[] removeDealFromArray(Deal[] array, int index) {
+		if (array == null) {
+			System.out.println("Ошибка. Массив пустой");
+			return null;
+		}
+
+		if (array.length == 1) {
+			return null;
+		}
+
+		Deal[] newArray = new Deal[array.length - 1];
+
+		if (index != 0) {
+			System.arraycopy(array, 0, newArray, 0, index);
+		}
+		System.arraycopy(array, index + 1, newArray, index, array.length - index - 1);
+
+		return newArray;
+	}
+
+	public String getProductsDescription() {
+		StringBuilder builder = new StringBuilder();
+
+		if (products != null) {
+			for (Product p : products) {
+				builder.append(p.getDescription());
+				builder.append("\n");
+			}
+		} else {
+			builder.append("Пусто");
+		}
+
+		return builder.toString();
+	}
+
+	public String getBill() {
+		StringBuilder builder = new StringBuilder();
+
+		if (products == null) {
+			System.out.println("Сделка пуста");
+		} else {
+			for (Product p : products) {
+				builder.append(p.getBillDescription());
+				builder.append("\n");
+			}
+			builder.append("Сумма: " + calcFullPrice() + "\n");
+			builder.append("Продавец ");
+			builder.append(seller.getFullName() + "\n");
+			builder.append(dealDate);
+			builder.append("-");
+			builder.append(deadline);
+		}
+
+		return builder.toString();
+	}
+
 	public Product[] getProducts() {
 		return products;
 	}

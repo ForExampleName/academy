@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import by.academy.homeworks.homework_3.deal.enums.Role;
-import by.academy.homeworks.homework_3.validators.AmericanPhoneValidator;
-import by.academy.homeworks.homework_3.validators.BelarusPhoneValidator;
-import by.academy.homeworks.homework_3.validators.EmailValidator;
 
 public class User {
 	protected String fullName;
@@ -38,6 +35,11 @@ public class User {
 		builder.append(phone);
 		builder.append("\nE-mail: ");
 		builder.append(email);
+		builder.append("\nДень рождения: ");
+		builder.append(birthday);
+		builder.append("\nСчёт: ");
+		builder.append(money);
+		builder.append(" руб");
 		return builder.toString();
 	}
 
@@ -69,28 +71,16 @@ public class User {
 		return phone;
 	}
 
-	public boolean setPhone(String phone) {
-		if (new BelarusPhoneValidator().validate(phone) || new AmericanPhoneValidator().validate(phone)) {
-			this.phone = phone;
-			return true;
-		}
-
-		System.out.println("Не соответствует формату");
-		return false;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public boolean setEmail(String email) {
-		if (new EmailValidator().validate(email)) {
-			this.email = email;
-			return true;
-		}
-
-		System.out.println("Не соответствует формату");
-		return false;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Role getRole() {
