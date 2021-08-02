@@ -68,10 +68,10 @@ public class Market {
 			}
 
 			while (true) {
-				System.out.print("Логин: ");
+				System.out.print("Логин(глобальная переменная): ");
 				login = scanner.nextLine();
 
-				System.out.print("Пароль: ");
+				System.out.print("Пароль(глобальная переменная): ");
 				password = scanner.nextLine();
 
 				if (login.equals(SELLER_LOGIN) && password.equals(SELLER_PASSWORD)) {
@@ -475,7 +475,7 @@ public class Market {
 							System.out.print("Введите цену: ");
 							price = scanner.nextDouble();
 							scanner.nextLine();
-							
+
 							if (productID == 1) {
 								int processor, ram;
 
