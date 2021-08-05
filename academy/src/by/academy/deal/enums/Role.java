@@ -1,4 +1,4 @@
-package by.academy.homeworks.homework_3.deal.enums;
+package by.academy.deal.enums;
 
 public enum Role {
 	SELLER("Продавец"), CUSTOMER("Покупатель");

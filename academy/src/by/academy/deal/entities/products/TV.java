@@ -1,9 +1,11 @@
-package by.academy.homeworks.homework_3.deal;
+package by.academy.deal.entities.products;
 
 import java.util.Objects;
 
-import by.academy.homeworks.homework_3.deal.enums.Resolution;
+import by.academy.deal.annotations.ProductProvider;
+import by.academy.deal.enums.Resolution;
 
+@ProductProvider(country = "Taiwan", shelfLife = 6, parts = { "Screen", "Speakers" })
 public class TV extends Product implements Cloneable {
 	protected String model;
 	protected float diagonal;

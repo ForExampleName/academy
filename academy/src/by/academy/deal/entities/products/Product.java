@@ -1,4 +1,4 @@
-package by.academy.homeworks.homework_3.deal;
+package by.academy.deal.entities.products;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -82,6 +82,15 @@ public abstract class Product implements Cloneable {
 
 		System.out.println("Ошибка. Данный продукт не найден");
 		return array;
+	}
+
+	@Deprecated
+	public void test() {
+		int i = 0;
+
+		// some hard logic
+		while (i++ < 1_000_000) {
+		}
 	}
 
 	public String getName() {

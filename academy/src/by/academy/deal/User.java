@@ -1,9 +1,9 @@
-package by.academy.homeworks.homework_3.deal;
+package by.academy.deal;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-import by.academy.homeworks.homework_3.deal.enums.Role;
+import by.academy.deal.enums.Role;
 
 public class User {
 	protected String fullName;

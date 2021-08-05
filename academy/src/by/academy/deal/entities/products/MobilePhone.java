@@ -1,9 +1,11 @@
-package by.academy.homeworks.homework_3.deal;
+package by.academy.deal.entities.products;
 
 import java.util.Objects;
 
-import by.academy.homeworks.homework_3.deal.enums.Color;
+import by.academy.deal.annotations.ProductProvider;
+import by.academy.deal.enums.Color;
 
+@ProductProvider(shelfLife = 24, parts = { "Screen", "Memory", "Camera" })
 public class MobilePhone extends Product implements Cloneable {
 	protected String model;
 	protected Color color;

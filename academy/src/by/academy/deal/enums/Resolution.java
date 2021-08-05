@@ -1,4 +1,4 @@
-package by.academy.homeworks.homework_3.deal.enums;
+package by.academy.deal.enums;
 
 public enum Resolution {
 	FULL_HD("Full HD"), UHD("4K");

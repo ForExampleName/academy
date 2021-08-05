@@ -1,7 +1,10 @@
-package by.academy.homeworks.homework_3.deal;
+package by.academy.deal.entities.products;
 
 import java.util.Objects;
 
+import by.academy.deal.annotations.ProductProvider;
+
+@ProductProvider(parts = { "CPU", "RAM", "GPU", "Motherboard" })
 public class Laptop extends Product implements Cloneable {
 	protected String model;
 	protected int processor;

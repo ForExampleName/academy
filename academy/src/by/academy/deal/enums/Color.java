@@ -1,4 +1,4 @@
-package by.academy.homeworks.homework_3.deal.enums;
+package by.academy.deal.enums;
 
 public enum Color {
 	RED("Красный"), GREEN("Зелёный"), DARK_BLUE("Синий"), BLUE("Голубой"), WHITE("Белый"), BLACK("Чёрный");

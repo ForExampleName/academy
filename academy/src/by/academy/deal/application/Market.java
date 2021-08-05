@@ -1,19 +1,25 @@
-package by.academy.homeworks.homework_3.deal;
+package by.academy.deal.application;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-import by.academy.homeworks.homework_3.deal.enums.Color;
-import by.academy.homeworks.homework_3.deal.enums.Resolution;
-import by.academy.homeworks.homework_3.deal.enums.Role;
+import by.academy.deal.Deal;
+import by.academy.deal.User;
+import by.academy.deal.entities.products.Laptop;
+import by.academy.deal.entities.products.MobilePhone;
+import by.academy.deal.entities.products.Product;
+import by.academy.deal.entities.products.TV;
+import by.academy.deal.enums.Color;
+import by.academy.deal.enums.Resolution;
+import by.academy.deal.enums.Role;
 import by.academy.homeworks.homework_3.validators.AmericanPhoneValidator;
 import by.academy.homeworks.homework_3.validators.BelarusPhoneValidator;
 import by.academy.homeworks.homework_3.validators.DateValidator;
 import by.academy.homeworks.homework_3.validators.EmailValidator;
 
 public class Market {
-	private static final Scanner scanner = new Scanner(System.in);
+	private static Scanner scanner = new Scanner(System.in);
 
 	private static final String SELLER_LOGIN = new String("SELLER");
 	private static final String CUSTOMER_LOGIN = new String("CUSTOMER");
@@ -55,6 +61,9 @@ public class Market {
 	}
 
 	public static void main(String[] args) {
+		// testing deprecated mathod
+		catalog[0].test();
+
 		int mainMenu;
 
 		String login, password;

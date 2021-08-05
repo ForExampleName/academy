@@ -1,8 +1,10 @@
-package by.academy.homeworks.homework_3.deal;
+package by.academy.deal;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
+
+import by.academy.deal.entities.products.Product;
 
 public class Deal {
 	protected Product[] products;
