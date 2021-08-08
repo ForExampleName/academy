@@ -200,16 +200,22 @@ public class CustomLinkedList<T> implements Iterable<T> {
 		return new InnerIterator();
 	}
 
-	class InnerIterator implements Iterator<T> {
+	private class InnerIterator implements Iterator<T> {
 		Node<T> current = null;
+		int index;
 
 		@Override
 		public boolean hasNext() {
-			if (current == null) {
+			if (current == null && index == 0) {
 				return head != null;
 			}
 
-			return current.next != null;
+			if (index < size) {
+				return current != null;
+			}
+
+			index = 0;
+			return false;
 		}
 
 		@Override
@@ -221,7 +227,9 @@ public class CustomLinkedList<T> implements Iterable<T> {
 			T value = current.value;
 			current = current.next;
 
-			return null;
+			++index;
+
+			return value;
 		}
 	}
 }

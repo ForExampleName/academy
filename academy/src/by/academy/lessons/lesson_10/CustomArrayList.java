@@ -1,7 +1,5 @@
 package by.academy.lessons.lesson_10;
 
-import java.util.Arrays;
-
 public class CustomArrayList<T> {
 	protected T[] list;
 	protected int size;

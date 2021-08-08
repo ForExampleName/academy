@@ -29,7 +29,6 @@ public class CustomLinkedListDemo {
 		list.printList();
 
 		list.remove(3);
-
 		list.printList();
 
 		System.out.println();
