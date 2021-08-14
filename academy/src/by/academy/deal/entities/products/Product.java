@@ -1,12 +1,20 @@
 package by.academy.deal.entities.products;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Objects;
 
 public abstract class Product implements Cloneable {
 	protected String name;
 	protected double price;
 	protected int quantity;
+
+	public static final Comparator<Product> productComparator = new Comparator<Product>() {
+		@Override
+		public int compare(Product o1, Product o2) {
+			return Double.compare(o1.getPrice(), o2.getPrice());
+		}
+	};
 
 	public Product() {
 		super();
