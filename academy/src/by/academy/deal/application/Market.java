@@ -1,5 +1,9 @@
 package by.academy.deal.application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -145,6 +149,40 @@ public class Market {
 							} while (dealNumber < 1 || dealNumber > deals.length);
 
 							users[0].setMoney(users[0].getMoney() + deals[dealNumber - 1].calcFullPrice());
+
+							File file = new File("src\\by\\academy\\deal");
+							File outputFile = new File(
+									"src\\by\\academy\\deal" + "\\" + deals[dealNumber - 1].getDealDate() + "_"
+											+ deals[dealNumber - 1].getDeadline() + ".txt");
+							if (!outputFile.exists()) {
+								try {
+									outputFile.createNewFile();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+							FileOutputStream fileOut = null;
+							try {
+								fileOut = new FileOutputStream(outputFile);
+							} catch (FileNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+							try {
+								fileOut.write(deals[dealNumber - 1].getBill().getBytes());
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								fileOut.close();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
 							deals = Deal.removeDealFromArray(deals, dealNumber - 1);
 
 						}

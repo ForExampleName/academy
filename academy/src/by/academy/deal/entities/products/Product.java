@@ -1,10 +1,11 @@
 package by.academy.deal.entities.products;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
 
-public abstract class Product implements Cloneable {
+public abstract class Product implements Cloneable, Serializable {
 	protected String name;
 	protected double price;
 	protected int quantity;
