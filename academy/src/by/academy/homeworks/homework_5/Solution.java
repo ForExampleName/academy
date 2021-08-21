@@ -52,11 +52,11 @@ public class Solution {
 		}
 	}
 
-	public static DoublyLinkedListNode reverse(DoublyLinkedListNode head) {
-		if (head == null || head.next == null)
-			return head;
+	public static DoublyLinkedListNode reverse(DoublyLinkedList list) {
+		if (list.head == null || list.head.next == null)
+			return list.head;
 
-		DoublyLinkedListNode currentNode = head;
+		DoublyLinkedListNode currentNode = list.head;
 		DoublyLinkedListNode nextNode = null;
 
 		while (true) {
@@ -71,6 +71,11 @@ public class Solution {
 
 			currentNode = nextNode;
 		}
+
+		DoublyLinkedListNode temp = list.head;
+
+		list.head = list.tail;
+		list.tail = temp;
 
 		return currentNode;
 	}
@@ -91,7 +96,7 @@ public class Solution {
 			llist.insertNode(llistItem);
 		}
 
-		DoublyLinkedListNode llist1 = reverse(llist.head);
+		DoublyLinkedListNode llist1 = reverse(llist);
 
 		printDoublyLinkedList(llist1, " ");
 		scanner.close();

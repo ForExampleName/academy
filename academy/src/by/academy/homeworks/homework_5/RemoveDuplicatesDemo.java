@@ -8,17 +8,18 @@ import java.util.List;
 import java.util.Set;
 
 public class RemoveDuplicatesDemo {
-	private static <T> Collection<T> removeDuplicates(Collection<T> toRemoveDuplcates) {
-		Set<T> uniqueValues = new HashSet<T>(toRemoveDuplcates);
+	private static <T> Collection<T> removeDuplicates(Collection<T> withDuplicates) {
+		Set<T> uniqueValues = new HashSet<T>(withDuplicates);
 
-		toRemoveDuplcates.clear();
-		toRemoveDuplcates.addAll(uniqueValues);
+		withDuplicates.clear();
+		withDuplicates.addAll(uniqueValues);
 
-		return toRemoveDuplcates;
+		return withDuplicates;
 	}
 
 	public static void main(String[] args) {
 		Integer[] array = { 1, 2, 3, 4, 5, 3, 2, 8, 5, 6, 7 };
+
 		List<Integer> list = new ArrayList<>(Arrays.asList(array));
 
 		removeDuplicates(list);
