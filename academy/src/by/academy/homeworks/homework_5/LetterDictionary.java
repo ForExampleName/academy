@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class LetterDictionary {
-	private static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+
 		Map<Character, Integer> dictionary = new HashMap<>();
 		System.out.print("Enter your string:");
 

@@ -6,24 +6,20 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class WriteIntoFile {
-	public static final String STOP_WORD = "STOP";
+	private static final String STOP_WORD = "STOP";
+	private static final String FILE_PATH = "academy\\src\\by\\academy\\homeworks\\homework_6\\files\\file.txt";
 
 	public static void main(String[] args) {
 		String input;
-		try (Scanner scanner = new Scanner(System.in);
-				BufferedWriter writer = new BufferedWriter(
-						new FileWriter("src\\by\\academy\\homeworks\\homework_6\\file.txt"))) {
-			while (true) {
-				input = scanner.nextLine();
 
-				if (input.equals(STOP_WORD))
-					break;
-
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));
+				Scanner scanner = new Scanner(System.in)) {
+			while (!((input = scanner.nextLine()).equals(STOP_WORD))) {
 				writer.write(input);
 				writer.newLine();
 			}
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 }

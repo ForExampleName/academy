@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MaxMark {
-	private static Scanner scanner = new Scanner(System.in);
 
 	private static String getMarks(List<Integer> marks) {
 		StringBuilder builder = new StringBuilder();
@@ -41,6 +40,8 @@ public class MaxMark {
 	}
 
 	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+
 		List<Integer> marks = new ArrayList<>();
 
 		String marksStr = null;
