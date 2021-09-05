@@ -10,16 +10,7 @@ public class StreamDemo {
 	private static final int GENERATE_BORDER = 101;
 	private static final int LIMIT_VALUE = 100;
 	private static final int FILTER_BORDER = 100;
-	private static final int SKIP_VALUE = 3;
-
-	private static final Function<Double, String> valueFunction = (value) -> {
-		StringBuilder valueStr = new StringBuilder();
-
-		valueStr.append("Number: ");
-		valueStr.append(value);
-
-		return valueStr.toString();
-	};
+	private static final int SKIP_VALUE = 3;	
 
 	public static void main(String[] args) {
 		Map<Double, String> map = Stream
@@ -29,9 +20,10 @@ public class StreamDemo {
 				.filter((i) -> i < FILTER_BORDER)
 				.sorted()
 				.skip(SKIP_VALUE)
-				.collect(Collectors.toMap(Function.identity(),
-						// valueFunction,
-						(v) -> "Number: " + v, (s, a) -> s));
+				.collect(Collectors.toMap(
+						Function.identity(),
+						(v) -> "Number: " + v, 
+						(prevVal, newVal) -> prevVal));
 
 		for (Double d : map.keySet()) {
 			System.out.println(map.get(d));
